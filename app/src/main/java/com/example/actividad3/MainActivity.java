@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent calculationActivity = new Intent(this, CalculationActivity.class);
                     calculationActivity.putExtra("name", name);
                     startActivity(calculationActivity);
+                    nameText.getText().clear();
                 }
         );
 

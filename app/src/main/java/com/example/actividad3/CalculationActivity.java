@@ -18,6 +18,7 @@ public class CalculationActivity extends AppCompatActivity {
     private Button calculateBtn;
     private String name;
     private double project1D, project2D, quizD, exam1D, exam2D, finalGrade;
+    private boolean numbersSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,6 @@ public class CalculationActivity extends AppCompatActivity {
         name = getIntent().getExtras().getString("name");
 
 
-
         calculateBtn.setOnClickListener(
                 (v) -> {
 
@@ -47,16 +47,26 @@ public class CalculationActivity extends AppCompatActivity {
                     quizD = Double.parseDouble(quiz.getText().toString());
                     exam1D = Double.parseDouble(exam1.getText().toString());
                     exam2D = Double.parseDouble(exam2.getText().toString());
+
+                    numbersSubmit = true;
+
                     } catch (NumberFormatException e) {
                         Toast.makeText(this, "Por favor escribe números", Toast.LENGTH_SHORT).show();
+                        numbersSubmit = false;
                     }
 
                     //Final grade
                     finalGrade = ((project1D*0.20) + (project2D*0.20) + (quizD*0.20) + (exam1D*0.20) + (exam2D*0.20));
 
-                    Intent resultActivity = new Intent(this, ResultActivity.class);
-                    resultActivity.putExtra("finalGrade", finalGrade);
-                    startActivity(resultActivity);
+                    if (numbersSubmit == true){
+                        //Intent
+                        Intent resultActivity = new Intent(this, ResultActivity.class);
+                        resultActivity.putExtra("finalGrade", finalGrade);
+                        resultActivity.putExtra("name", name);
+                        startActivity(resultActivity);
+                        finish();
+                    }
+
                 }
         );
     }
